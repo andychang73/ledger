@@ -1,0 +1,7 @@
+DATASOURCE_URL: jdbc:postgresql://localhost:5433/postgres
+DATASOURCE_USERNAME: postgres
+DATASOURCE_PASSWORD: postgres
+
+PS_URL: jdbc:postgresql://localhost:5433/postgres
+FLYWAY_USERNAME: postgres
+FLYWAY_PASSWORD: postgres

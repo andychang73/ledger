@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abstractionizer.ledger.write.storage.rmdb.mapper.AccountMapper">
+
+    <select id="findById"
+            resultType="com.abstractionizer.ledger.write.storage.rmdb.entity.AccountEntity">
+        SELECT *
+        FROM account
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateAccountStatus">
+        UPDATE account
+        SET state = #{state}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

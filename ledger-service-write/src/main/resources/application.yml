@@ -1,0 +1,45 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: ledger-service-write
+  profiles:
+    active: local
+
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 16
+      max-lifetime: 28200000
+      pool-name: HikariPool-write
+
+  flyway:
+    locations: classpath:migration
+    baseline-on-migrate: false
+    connect-retries: 10
+    user: ${FLYWAY_USERNAME}
+    password: ${FLYWAY_PASSWORD}
+    url: ${PS_URL}
+    driver-class-name: org.postgresql.Driver
+    enabled: true
+    schemas: public
+
+mybatis-plus:
+  mapper-location: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.abstractionizer.ledgerService.storage.rdbms.entity
+  type-enums-package: com.abstractionizer.ledgerService.enumeration
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    auto-mapping-unknown-column-behavior: warning
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+      table-underline: true
