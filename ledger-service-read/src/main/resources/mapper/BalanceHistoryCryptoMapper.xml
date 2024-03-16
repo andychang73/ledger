@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abstractionizer.ledger.read.storage.rmdb.mapper.BalanceHistoryCryptoMapper">
 
+    <select id="selectByEntityIdAndAccountIdAndWalletIdAndFromDateAndToDate"
+            resultType="com.abstractionizer.ledger.read.model.vo.BalanceHistoryVoCryptoVo">
+        SELECT created_at, entity_id, account_id, wallet_id, asset_code, asset_name, source_wallet_id, target_wallet_id, amount, balance
+        FROM balance_history_crypto
+        WHERE entity_id = #{entityId} AND account_id = #{accountId} AND wallet_id = #{walletId} AND created_at BETWEEN #{from} AND #{to}
+        ORDER BY created_at DESC
+    </select>
 </mapper>

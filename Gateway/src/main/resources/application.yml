@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Gateway
+  profiles:
+    active: local
+
+feign:
+  client:
+    ledger-service-read:
+      url: ${LEDGER_SERVICE_READ_URL}

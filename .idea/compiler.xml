@@ -5,6 +5,7 @@
       <directory url="file://$PROJECT_DIR$/ledger-service-write/src/main/resources/archetype-resources" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/ledger-service-read/src/main/resources/archetype-resources" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/common-base/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/Gateway/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
@@ -15,11 +16,13 @@
         <module name="ledger-service-read" />
         <module name="ledger-service-write" />
         <module name="common-base" />
+        <module name="Gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Gateway" options="-parameters" />
       <module name="common-base" options="-parameters" />
       <module name="ledger" options="" />
       <module name="ledger-service-read" options="-parameters" />

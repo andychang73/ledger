@@ -12,7 +12,7 @@
             resultType="com.abstractionizer.ledger.read.model.vo.AccountAndWalletDetailVo">
         SELECT a.id AS accountId, a.state AS state, w.id AS walletId, w.asset_type AS assetType, w.asset_code AS assetCode, w.asset_name AS assetName, w.balance
         FROM account_detail a
-        LEFT JOIN wallet_detail w
+        LEFT JOIN wallet_detail w ON w.account_id = a.id
         WHERE a.entity_id = #{entityId}
     </select>
 

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("balance_history_stock")
-public class BalanceHistoryStockEntity {
+public class BalanceHistoryStockEntity{
 
     @TableId(type = IdType.AUTO)
     private Long id;

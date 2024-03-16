@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("balance_history_fiat")
-public class BalanceHistoryFiatEntity {
+public class BalanceHistoryFiatEntity{
 
     @TableId(type = IdType.AUTO)
     private Long id;
