@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.wallet(
 	account_id INT8 NOT NULL,
 	asset_id INT8 NOT NULL,
 	balance DECIMAL(21,4) DEFAULT 0,
+	freeze_balance DECIMAL(21,4) DEFAULT 0,
 	created_at TIMESTAMP DEFAULT now(),
 	modified_at TIMESTAMP DEFAULT now()
 );
@@ -61,7 +62,6 @@ CREATE TABLE IF NOT EXISTS public.movement(
 	amount DECIMAL(21,4) NOT NULL,
 	action VARCHAR(32) NOT NULL,
 	state VARCHAR(32) NOT NULL,
-	remark VARCHAR(128),
 	created_at TIMESTAMP DEFAULT now(),
 	modified_at TIMESTAMP DEFAULT now()
 );

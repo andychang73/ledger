@@ -1,5 +1,5 @@
 package com.abstractionizer.module.enumeration;
 
 public enum MovementState {
-    PENDING, CLEARED, FAILED, DECLINED, CANCELLED
+    PENDING, PROCESSING, CLEARED, FAILED, DECLINED, CANCELLED
 }
