@@ -14,6 +14,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ledger-service-read" />
+        <module name="client" />
         <module name="ledger-service-write" />
         <module name="common-base" />
         <module name="Gateway" />
@@ -23,6 +24,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Gateway" options="-parameters" />
+      <module name="client" options="-parameters" />
       <module name="common-base" options="-parameters" />
       <module name="ledger" options="" />
       <module name="ledger-service-read" options="-parameters" />

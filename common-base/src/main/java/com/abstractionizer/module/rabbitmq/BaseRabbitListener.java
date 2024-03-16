@@ -1,5 +1,6 @@
 package com.abstractionizer.module.rabbitmq;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rabbitmq.client.Channel;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -15,14 +16,14 @@ import java.util.Optional;
 public class BaseRabbitListener {
 
     @SneakyThrows
-    protected void processBusiness(@NonNull final Message<?> message, @NonNull final Channel channel,
-                                   @NonNull final RabbitMessageProcessor processor) {
+    protected void processMessage(@NonNull final Message<?> message, @NonNull final Channel channel,
+                                  @NonNull final RabbitMessageProcessor processor) {
 
         Long tag = null;
         boolean multiple = false;
         boolean requeue = false;
 
-        try{
+        try {
 
             MessageHeaders headers = message.getHeaders();
             tag = Optional.ofNullable(headers.get(AmqpHeaders.DELIVERY_TAG, Long.class)).orElseThrow(() -> new RuntimeException("No tags!!!"));
@@ -30,16 +31,16 @@ public class BaseRabbitListener {
             processor.doBusinessLogic();
 
             channel.basicAck(tag, multiple);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("", e);
-            if(Objects.nonNull(tag)){
+            if (Objects.nonNull(tag)) {
                 channel.basicNack(tag, multiple, requeue);
             }
         }
     }
 
-    public interface RabbitMessageProcessor{
-        void doBusinessLogic();
+    public interface RabbitMessageProcessor {
+        void doBusinessLogic() throws JsonProcessingException;
     }
 
 }

@@ -32,7 +32,6 @@ spring:
 mybatis-plus:
   mapper-location: classpath:/mapper/*Mapper.xml
   typeAliasesPackage: com.abstractionizer.ledger.read.storage.rdbms.entity
-#  type-enums-package: com.abstractionizer.ledger.read.enumeration
   type-enums-package: com.abstractionizer.module.enumeration
   configuration:
     map-underscore-to-camel-case: true

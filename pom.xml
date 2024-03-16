@@ -20,6 +20,7 @@
 		<module>ledger-service-read</module>
 		<module>common-base</module>
 		<module>Gateway</module>
+		<module>client</module>
 	</modules>
 
 	<properties>

@@ -1,6 +1,5 @@
 package com.abstractionizer.ledger.write.storage.rmdb.entity;
 
-import com.abstractionizer.module.enumeration.MovementAction;
 import com.abstractionizer.module.enumeration.MovementState;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,6 +22,8 @@ public class MovementEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    private Long entityId;
+
     private Long accountId;
 
     private Long sourceWalletId;
@@ -31,11 +32,7 @@ public class MovementEntity {
 
     private BigDecimal amount;
 
-    private MovementAction action;
-
     private MovementState state;
-
-    private String remark;
 
     private LocalDateTime createdAt;
 

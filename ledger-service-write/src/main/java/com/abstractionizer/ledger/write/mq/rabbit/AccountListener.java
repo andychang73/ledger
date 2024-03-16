@@ -23,6 +23,6 @@ public class AccountListener extends BaseRabbitListener {
 
     @RabbitListener(queues = ACCOUNT_STATE_QUEUE, containerFactory = "containerFactory")
     public void modifyAccountState(@Payload @Valid Message<ModifyAccountStateDto> message, Channel channel){
-        processBusiness(message, channel, () -> accountBusiness.modifyAccountState(message.getPayload()));
+        processMessage(message, channel, () -> accountBusiness.modifyAccountState(message.getPayload()));
     }
 }

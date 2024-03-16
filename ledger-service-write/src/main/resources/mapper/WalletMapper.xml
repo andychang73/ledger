@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abstractionizer.ledger.write.storage.rmdb.mapper.WalletMapper">
 
+    <insert id="addFreezeAmountById">
+        UPDATE wallet
+        SET freeze_balance = freeze_balance + #{amount}
+        WHERE id = #{id}
+    </insert>
 </mapper>

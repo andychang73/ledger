@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abstractionizer.ledger.write.storage.rmdb.mapper.EntityMapper">
 
+    <select id="selectByEntityIdAndAccountId" resultType="com.abstractionizer.ledger.write.model.vo.AccountVo">
+        SELECT a.id, a.entity_id, a.state
+        FROM entity e
+        JOIN account a ON e.id = a.entity_id
+        WHERE e.id = #{entityId} AND a.id = #{accountId}
+        FOR UPDATE
+    </select>
 </mapper>
