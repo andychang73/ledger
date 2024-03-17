@@ -3,6 +3,7 @@ package com.abstractionizer.ledger.gateway.controller.read;
 import com.abstractionizer.ledger.gateway.feign.LedgerServiceReadAccountDetailFeignClient;
 import com.abstractionizer.ledger.gateway.model.vo.AccountDetailVo;
 import com.abstractionizer.module.response.SuccessResp;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class AccountDetailController {
         this.ledgerServiceReadAccountDetailFeignClient = ledgerServiceReadAccountDetailFeignClient;
     }
 
+    @Operation(summary = "Get a list of account details by entity")
     @GetMapping("/{entityId}")
     public SuccessResp<List<AccountDetailVo>> getAccountDetails (@PathVariable Long entityId){
         return ledgerServiceReadAccountDetailFeignClient.getAccountDetail(entityId);
