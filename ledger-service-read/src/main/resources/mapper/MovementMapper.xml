@@ -3,8 +3,8 @@
 <mapper namespace="com.abstractionizer.ledger.read.storage.rmdb.mapper.MovementMapper">
 
     <update id="upsert">
-        INSERT INTO movement (id, entity_id, source_account_id, target_account_id, source_wallet_id, target_wallet_id, amount, state, created_at, modified_at)
-        VALUES (#{id}, #{entityId},#{sourceAccountId},#{targetAccountId},#{sourceWalletId},#{targetWalletId}, #{amount}, #{state}, #{createdAt}, #{modifiedAt})
+        INSERT INTO movement (id, entity_id, source_account_id, target_account_id, source_wallet_id, target_wallet_id, amount, state, created_at, modified_at, remark)
+        VALUES (#{id}, #{entityId},#{sourceAccountId},#{targetAccountId},#{sourceWalletId},#{targetWalletId}, #{amount}, #{state}, #{createdAt}, #{modifiedAt}, #{remark})
         ON CONFLICT (id)
         DO
         UPDATE SET

@@ -31,7 +31,7 @@ public class MovementListener extends BaseRabbitListener {
 
     @RabbitListener(queues = MOVEMENT_MODIFY_QUEUE, containerFactory = "containerFactory", concurrency = "5")
     public void processModifyMovement(@Payload @Valid Message<MovementModifyDto> message, Channel channel) {
-
+        processMessage(message, channel, () -> movementBusiness.modify(message.getPayload()));
     }
 
     @RabbitListener(queues = MOVEMENT_CANCEL_QUEUE, containerFactory = "containerFactory", concurrency = "5")

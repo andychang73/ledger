@@ -7,10 +7,12 @@ import com.abstractionizer.ledger.write.storage.rmdb.mapper.MovementMapper;
 import com.abstractionizer.module.enumeration.MovementState;
 import com.abstractionizer.module.exception.BusinessException;
 import lombok.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,18 +37,43 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public MovementEntity getMovementEntity(@NonNull final MovementMoveDto dto, @NonNull final MovementState movementState) {
+        return getMovementEntity(dto.getEntityId(), dto.getSourceAccountId(), dto.getTargetAccountId(), dto.getSourceWalletId(),
+                dto.getTargetWalletId(), dto.getAmount(), movementState, LocalDateTime.now(), LocalDateTime.now(), null);
+    }
+
+    @Override
+    public MovementEntity getMovementEntity(@NonNull final MovementEntity entity, @NonNull final BigDecimal amount,
+                                            @NonNull final MovementState movementState, @Nullable final String remark) {
+        return getMovementEntity(entity.getEntityId(), entity.getSourceAccountId(), entity.getTargetAccountId(), entity.getSourceWalletId(),
+                entity.getTargetWalletId(), amount, movementState, LocalDateTime.now(), LocalDateTime.now(), remark);
+    }
+
+    @Override
+    public MovementEntity getReversedMovement(@NonNull final MovementEntity entity, @NonNull final BigDecimal amount,
+                                              @NonNull final MovementState movementState, @Nullable final String remark) {
+        return getMovementEntity(entity.getEntityId(), entity.getTargetAccountId(), entity.getSourceAccountId(), entity.getTargetWalletId(),
+                entity.getSourceWalletId(), amount.negate(), movementState, LocalDateTime.now(), LocalDateTime.now(), remark);
+    }
+
+    @Override
+    public MovementEntity getMovementEntity(@NonNull final Long entityId, @NonNull final Long sourceAccountId, @NonNull final Long targetAccountId,
+                                            @NonNull final Long sourceWalletId, @NonNull final Long targetWalletId, @NonNull final BigDecimal amount,
+                                            @NonNull final MovementState state, @NonNull final LocalDateTime created, @NonNull final LocalDateTime modifiedAt,
+                                            @Nullable final String remark){
         return MovementEntity.builder()
-                .entityId(dto.getEntityId())
-                .sourceAccountId(dto.getSourceAccountId())
-                .targetAccountId(dto.getTargetAccountId())
-                .sourceWalletId(dto.getSourceWalletId())
-                .targetWalletId(dto.getTargetWalletId())
-                .amount(dto.getAmount())
-                .state(movementState)
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
+                .entityId(entityId)
+                .sourceAccountId(sourceAccountId)
+                .targetAccountId(targetAccountId)
+                .sourceWalletId(sourceWalletId)
+                .targetWalletId(targetWalletId)
+                .amount(amount)
+                .state(state)
+                .createdAt(created)
+                .modifiedAt(modifiedAt)
+                .remark(remark)
                 .build();
     }
+
 
     @Override
     public MovementEntity selectByIdOrThrow(@NonNull final Long id) {
@@ -62,7 +89,7 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Override
+
     public void updateEntityRequiresNew(@NonNull final MovementEntity movement) {
         movementMapper.updateById(movement);
     }
