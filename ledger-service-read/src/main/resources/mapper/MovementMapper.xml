@@ -11,4 +11,11 @@
             state = EXCLUDED.state,
             modified_at = EXCLUDED.modified_at
     </update>
+    <select id="selectByEntityId"
+            resultType="com.abstractionizer.ledger.read.storage.rmdb.entity.MovementEntity">
+        SELECT *
+        FROM movement
+        WHERE entity_id = #{entityId}
+        ORDER BY created_at DESC
+    </select>
 </mapper>

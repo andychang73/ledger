@@ -11,7 +11,7 @@ public class MovementConfig {
 
     public static final String MOVEMENT_MOVE_QUEUE = "ledger.write.movement.move.q";
     public static final String MOVEMENT_MODIFY_QUEUE = "ledger.write.movement.modify.q";
-    public static final String MOVEMENT_CANCEL_QUEUE = "ledger.write.movement.cancel.q";
+    public static final String MOVEMENT_REVERSE_QUEUE = "ledger.write.movement.reverse.q";
     public static final String MOVEMENT_BROADCAST_EXCHANGE = "ledger.write.movement.broadcast.ex";
 
     @Bean("movementMoveQ")
@@ -28,10 +28,10 @@ public class MovementConfig {
                 .build();
     }
 
-    @Bean("movementCancelQ")
+    @Bean("movementReverseQ")
     public Queue movementCancelQueue(){
         return QueueBuilder
-                .durable(MOVEMENT_CANCEL_QUEUE)
+                .durable(MOVEMENT_REVERSE_QUEUE)
                 .build();
     }
 

@@ -34,8 +34,8 @@ public class MovementListener extends BaseRabbitListener {
         processMessage(message, channel, () -> movementBusiness.modify(message.getPayload()));
     }
 
-    @RabbitListener(queues = MOVEMENT_CANCEL_QUEUE, containerFactory = "containerFactory", concurrency = "5")
+    @RabbitListener(queues = MOVEMENT_REVERSE_QUEUE, containerFactory = "containerFactory", concurrency = "5")
     public void processCancelMovement(@Payload @Valid Message<Long> message, Channel channel) {
-
+        processMessage(message, channel, () -> movementBusiness.reverse(message.getPayload()));
     }
 }

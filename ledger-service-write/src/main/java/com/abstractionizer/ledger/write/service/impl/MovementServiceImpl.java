@@ -52,7 +52,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementEntity getReversedMovement(@NonNull final MovementEntity entity, @NonNull final BigDecimal amount,
                                               @NonNull final MovementState movementState, @Nullable final String remark) {
         return getMovementEntity(entity.getEntityId(), entity.getTargetAccountId(), entity.getSourceAccountId(), entity.getTargetWalletId(),
-                entity.getSourceWalletId(), amount.negate(), movementState, LocalDateTime.now(), LocalDateTime.now(), remark);
+                entity.getSourceWalletId(), amount, movementState, LocalDateTime.now(), LocalDateTime.now(), remark);
     }
 
     @Override

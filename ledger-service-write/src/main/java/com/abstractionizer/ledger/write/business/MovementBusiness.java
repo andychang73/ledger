@@ -8,4 +8,6 @@ public interface MovementBusiness {
     void move(MovementMoveDto dto);
 
     void modify(MovementModifyDto dto);
+
+    void reverse(Long id);
 }

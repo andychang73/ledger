@@ -47,59 +47,16 @@ public class MovementBusinessImpl implements MovementBusiness {
         movementService.insert(movement);
         rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement));
 
-        try {
-
-            WalletDetailUpdateDto walletDetailUpdateDto = walletBusiness.validateMovement(dto);
-
-            walletBusiness.transferToTargetWallet(dto.getSourceWalletId(), dto.getTargetWalletId(), dto.getAmount());
-
-            updateMovementState(movement, MovementState.CLEARED, LocalDateTime.now());
-            SimpleWalletVo sourceWallet = walletService.getWalletVoOrThrow(walletDetailUpdateDto.getSourceWalletId());
-            SimpleWalletVo targetWallet = walletService.getWalletVoOrThrow(walletDetailUpdateDto.getTargetWalletId());
-
-            WalletDetailAndHistoryUpdateDto updateDetail = WalletDetailAndHistoryUpdateDto.builder()
-                    .entityId(dto.getEntityId())
-                    .sourceAccountId(walletDetailUpdateDto.getSourceAccountId())
-                    .targetAccountId(walletDetailUpdateDto.getTargetAccountId())
-                    .assetType(walletDetailUpdateDto.getAssetType())
-                    .assetCode(walletDetailUpdateDto.getAssetCode())
-                    .assetName(walletDetailUpdateDto.getAssetName())
-                    .sourceWalletId(sourceWallet.getId())
-                    .sourceBalance(sourceWallet.getBalance())
-                    .targetWalletId(targetWallet.getId())
-                    .targetBalance(targetWallet.getBalance())
-                    .amount(walletDetailUpdateDto.getAmount())
-                    .build();
-
-            rabbitTemplate.convertAndSend(WALLET_BALANCE_UPDATE_EXCHANGE, "", sourceWallet);
-            rabbitTemplate.convertAndSend(WALLET_BALANCE_UPDATE_EXCHANGE, "", targetWallet);
-            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement));
-            rabbitTemplate.convertAndSend("", "ledger.read.balance.history.update.q", updateDetail);
-
-        } catch (DeclineException dex) {
-
-            MovementEntity declinedMovement = updateMovementStateRequiresNew(movement, MovementState.DECLINED, LocalDateTime.now());
-
-            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(declinedMovement, dex.getMessage()));
-
-            throw dex;
-
-        } catch (Exception ex){
-
-            MovementEntity failedMovement = updateMovementStateRequiresNew(movement, MovementState.FAILED, LocalDateTime.now());
-
-            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(failedMovement, ex.getMessage()));
-
-            throw ex;
-        }
+        validateAndProcessMovement(movement);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void modify(@NonNull final MovementModifyDto dto) {
 
         MovementEntity movement = movementService.selectByIdOrThrow(dto.getId());
         if(movement.getState() != MovementState.CLEARED){
-            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement,"Failed to modify movement because it has not been CLEARED"));
+            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement,"Failed to modify movement because the state is not CLEARED"));
             return;
         }
 
@@ -115,12 +72,33 @@ public class MovementBusinessImpl implements MovementBusiness {
         if(amount.compareTo(BigDecimal.ZERO) > 0){
             movement = movementService.getMovementEntity(movement, amount, MovementState.PENDING, remark);
         }else{
-            movement = movementService.getReversedMovement(movement, amount, MovementState.PENDING, remark);
+            movement = movementService.getReversedMovement(movement, amount.negate(), MovementState.PENDING, remark);
         }
 
         movementService.insert(movement);
         rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement));
 
+        validateAndProcessMovement(movement);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void reverse(@NonNull final Long id) {
+
+        MovementEntity movement = movementService.selectByIdOrThrow(id);
+        if(movement.getState() != MovementState.CLEARED){
+            rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement,"Failed to reverse movement because the state is not CLEARED"));
+            return;
+        }
+
+        movement = movementService.getReversedMovement(movement, movement.getAmount(), MovementState.PENDING, "Reverse of Movement id: " + movement.getEntityId());
+        movementService.insert(movement);
+        rabbitTemplate.convertAndSend(MOVEMENT_BROADCAST_EXCHANGE, "", new MovementBroadCastDto(movement));
+
+        validateAndProcessMovement(movement);
+    }
+
+    private void validateAndProcessMovement(MovementEntity movement){
         try {
 
             WalletDetailUpdateDto walletDetailUpdateDto = walletBusiness.validateMovement(movement);
@@ -166,7 +144,6 @@ public class MovementBusinessImpl implements MovementBusiness {
 
             throw ex;
         }
-
     }
 
     private void updateMovementState(MovementEntity movement, MovementState state, LocalDateTime modifiedAt){
