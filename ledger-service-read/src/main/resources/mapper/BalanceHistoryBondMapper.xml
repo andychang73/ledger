@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abstractionizer.ledger.read.storage.rmdb.mapper.BalanceHistoryBondMapper">
 
+    <insert id="insertBatch">
+        INSERT INTO balance_history_bond (entity_id, account_id, wallet_id, asset_code, asset_name, source_wallet_id, target_wallet_id, amount, balance)
+        VALUES
+        <foreach collection="entities" item="item" separator=",">
+            (#{item.entityId},#{item.accountId},#{item.walletId},#{item.assetCode},#{item.assetName}, #{item.sourceWalletId}, #{item.targetWalletId}, #{item.amount}, #{item.balance})
+        </foreach>
+    </insert>
+
     <select id="selectByEntityIdAndAccountIdAndWalletIdAndFromDateAndToDate"
             resultType="com.abstractionizer.ledger.read.model.vo.BalanceHistoryVoBondVo">
         SELECT created_at, entity_id, account_id, wallet_id, asset_code, asset_name, source_wallet_id, target_wallet_id, amount, balance

@@ -14,4 +14,6 @@ import java.util.List;
 public interface BalanceHistoryStockMapper extends BaseMapper<BalanceHistoryStockEntity> {
 
     List<BalanceHistoryVo> selectByEntityIdAndAccountIdAndWalletIdAndFromDateAndToDate(Long entityId, Long accountId, Long walletId, LocalDateTime from, LocalDateTime to);
+
+    void insertBatch(List<BalanceHistoryStockEntity> entities);
 }

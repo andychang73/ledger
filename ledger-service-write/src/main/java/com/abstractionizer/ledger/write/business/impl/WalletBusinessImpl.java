@@ -41,7 +41,7 @@ public class WalletBusinessImpl implements WalletBusiness {
         WalletVo targetWallet = accountService.selectWalletForUpdateOrThrow(targetAccount.getId(), dto.getTargetWalletId());
 
         walletService.checkIfBothAssetTypeAreSameOrThrow(sourceWallet, targetWallet);
-        walletService.checkIfSufficientFundOrThrow(sourceWallet.getBalance(), sourceWallet.getFreezeBalance(), dto.getAmount());
+        walletService.checkIfSufficientFundOrThrow(sourceWallet.getBalance(), dto.getAmount());
 
         return WalletDetailUpdateDto.builder()
                 .entityId(dto.getEntityId())

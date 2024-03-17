@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Mapper
 @Repository
 public interface WalletMapper extends BaseMapper<WalletEntity> {
-    int addFreezeAmountById(Long id, BigDecimal amount);
 
     int reduceBalanceById(Long id, BigDecimal amount);
 

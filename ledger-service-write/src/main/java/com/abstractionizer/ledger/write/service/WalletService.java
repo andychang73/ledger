@@ -7,7 +7,7 @@ import com.abstractionizer.ledger.write.storage.rmdb.entity.WalletEntity;
 import java.math.BigDecimal;
 
 public interface WalletService {
-    void checkIfSufficientFundOrThrow(BigDecimal balance, BigDecimal freezeBalance, BigDecimal amount);
+    void checkIfSufficientFundOrThrow(BigDecimal balance, BigDecimal amount);
 
     void checkIfBothAssetTypeAreSameOrThrow(WalletVo sourceWallet, WalletVo targetWallet);
 

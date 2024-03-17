@@ -3,6 +3,7 @@ package com.abstractionizer.ledger.read.service.impl;
 import com.abstractionizer.ledger.read.model.vo.BalanceHistoryVo;
 import com.abstractionizer.ledger.read.model.vo.BalanceHistoryVoBondVo;
 import com.abstractionizer.ledger.read.service.BalanceHistoryBondService;
+import com.abstractionizer.ledger.read.storage.rmdb.entity.BalanceHistoryBondEntity;
 import com.abstractionizer.ledger.read.storage.rmdb.mapper.BalanceHistoryBondMapper;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,13 @@ public class BalanceHistoryBondServiceImpl implements BalanceHistoryBondService 
     public List<BalanceHistoryVo> getBalanceHistory(@NonNull final Long entityId, @NonNull final Long accountId, @NonNull final Long walletId,
                                                     @NonNull final LocalDateTime from, @NonNull final LocalDateTime to) {
         return balanceHistoryBondMapper.selectByEntityIdAndAccountIdAndWalletIdAndFromDateAndToDate(entityId, accountId, walletId, from, to);
+    }
+
+    @Override
+    public void insertBatch(@NonNull final List<BalanceHistoryBondEntity> balanceHistory) {
+        if(balanceHistory.isEmpty()){
+            return;
+        }
+        balanceHistoryBondMapper.insertBatch(balanceHistory);
     }
 }

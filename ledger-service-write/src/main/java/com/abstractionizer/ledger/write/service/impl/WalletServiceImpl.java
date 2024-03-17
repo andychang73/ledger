@@ -7,7 +7,6 @@ import com.abstractionizer.ledger.write.storage.rmdb.entity.WalletEntity;
 import com.abstractionizer.ledger.write.storage.rmdb.mapper.WalletMapper;
 import com.abstractionizer.module.exception.BusinessException;
 import com.abstractionizer.module.exception.DeclineException;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +25,9 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public void checkIfSufficientFundOrThrow(@NonNull final BigDecimal balance, @NotNull final BigDecimal freezeBalance,
+    public void checkIfSufficientFundOrThrow(@NonNull final BigDecimal balance,
                                              @NonNull final BigDecimal amount) {
-        if(balance.subtract(freezeBalance).compareTo(amount) < 0){
+        if(balance.compareTo(amount) < 0){
             throw new DeclineException(INSUFFICIENT_FUND);
         }
     }

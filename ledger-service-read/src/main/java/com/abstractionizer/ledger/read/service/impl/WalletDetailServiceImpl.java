@@ -7,6 +7,8 @@ import com.abstractionizer.module.exception.BusinessException;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 import static com.abstractionizer.module.error.Error.UPDATE_DATA_FAILED;
 
 @Service
@@ -20,7 +22,12 @@ public class WalletDetailServiceImpl implements WalletDetailService {
 
     @Override
     public void updateBalance(@NonNull final WalletVo dto) {
-        if(walletDetailMapper.updateBalanceById(dto.getId(), dto.getBalance()) != 1){
+        updateBalance(dto.getId(), dto.getBalance());
+    }
+
+    @Override
+    public void updateBalance(@NonNull final Long id, @NonNull final BigDecimal balance) {
+        if(walletDetailMapper.updateBalanceById(id, balance) != 1){
             throw new BusinessException(UPDATE_DATA_FAILED);
         }
     }

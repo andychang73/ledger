@@ -10,7 +10,7 @@
     </select>
 
     <select id="selectByIdAndWalletIdForUpdate" resultType="com.abstractionizer.ledger.write.model.vo.WalletVo">
-        SELECT w.id, a.type AS assetType, a.code AS assetCode, a.name AS assetName, w.balance, w.freeze_balance
+        SELECT w.id, a.type AS assetType, a.code AS assetCode, a.name AS assetName, w.balance
         FROM account acc
         JOIN wallet w ON w.account_id = acc.id
         JOIN asset a ON a.id = w.asset_id

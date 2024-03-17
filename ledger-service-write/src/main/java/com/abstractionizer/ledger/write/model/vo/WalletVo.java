@@ -14,5 +14,4 @@ public class WalletVo {
     private String assetCode;
     private String assetName;
     private BigDecimal balance;
-    private BigDecimal freezeBalance;
 }

@@ -22,3 +22,5 @@ INSERT INTO wallet (account_id, asset_id, balance) VALUES (7,11,80);
 INSERT INTO wallet (account_id, asset_id, balance) VALUES (7,12,70);
 INSERT INTO wallet (account_id, asset_id, balance) VALUES (8,20,60);
 INSERT INTO wallet (account_id, asset_id, balance) VALUES (8,21,50);
+INSERT INTO wallet (account_id, asset_id, balance) VALUES (8,30,0);
+INSERT INTO wallet (account_id, asset_id, balance) VALUES (8,31,0);

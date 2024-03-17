@@ -22,3 +22,5 @@ INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, b
 INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, balance) VALUES (22, 7, 'CRYPTO', 'ETH','Ethereum', 70);
 INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, balance) VALUES (23, 8, 'STOCK', 'AAPL','Apple Inc.', 60);
 INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, balance) VALUES (24, 8, 'STOCK', 'GOOGL','Alphabet Inc.', 60);
+INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, balance) VALUES (25, 8, 'BOND', 'GB3:GOV','US BOND 3 Month', 0);
+INSERT INTO wallet_detail (id, account_id, asset_type, asset_code, asset_name, balance) VALUES (26, 8, 'BOND', 'GB6:GOV','US BOND 6 Month', 0);

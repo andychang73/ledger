@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS public.wallet(
 	account_id INT8 NOT NULL,
 	asset_id INT8 NOT NULL,
 	balance DECIMAL(21,4) DEFAULT 0,
-	freeze_balance DECIMAL(21,4) DEFAULT 0,
 	created_at TIMESTAMP DEFAULT now(),
 	modified_at TIMESTAMP DEFAULT now()
 );
