@@ -1,6 +1,6 @@
 package com.abstractionizer.ledger.read.service.impl;
 
-import com.abstractionizer.ledger.read.model.dto.WalletBalanceUpdateDto;
+import com.abstractionizer.ledger.read.model.dto.WalletVo;
 import com.abstractionizer.ledger.read.service.WalletDetailService;
 import com.abstractionizer.ledger.read.storage.rmdb.mapper.WalletDetailMapper;
 import com.abstractionizer.module.exception.BusinessException;
@@ -19,8 +19,8 @@ public class WalletDetailServiceImpl implements WalletDetailService {
     }
 
     @Override
-    public void updateBalance(@NonNull final WalletBalanceUpdateDto dto) {
-        if(walletDetailMapper.updateBalanceById(dto.getId(), dto.getAmount()) != 1){
+    public void updateBalance(@NonNull final WalletVo dto) {
+        if(walletDetailMapper.updateBalanceById(dto.getId(), dto.getBalance()) != 1){
             throw new BusinessException(UPDATE_DATA_FAILED);
         }
     }

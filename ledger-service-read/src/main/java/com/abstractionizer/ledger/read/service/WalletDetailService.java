@@ -1,7 +1,7 @@
 package com.abstractionizer.ledger.read.service;
 
-import com.abstractionizer.ledger.read.model.dto.WalletBalanceUpdateDto;
+import com.abstractionizer.ledger.read.model.dto.WalletVo;
 
 public interface WalletDetailService {
-    void updateBalance(WalletBalanceUpdateDto dto);
+    void updateBalance(WalletVo dto);
 }

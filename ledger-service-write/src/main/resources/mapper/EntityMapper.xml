@@ -3,10 +3,9 @@
 <mapper namespace="com.abstractionizer.ledger.write.storage.rmdb.mapper.EntityMapper">
 
     <select id="selectByEntityIdAndAccountId" resultType="com.abstractionizer.ledger.write.model.vo.AccountVo">
-        SELECT a.id, a.entity_id, a.state
+        SELECT a.id, a.entity_id, a.state AS accountState
         FROM entity e
         JOIN account a ON e.id = a.entity_id
         WHERE e.id = #{entityId} AND a.id = #{accountId}
-        FOR UPDATE
     </select>
 </mapper>

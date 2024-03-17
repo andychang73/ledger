@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abstractionizer.ledger.read.storage.rmdb.mapper.MovementMapper">
 
+    <update id="upsert">
+        INSERT INTO movement (id, entity_id, source_account_id, target_account_id, source_wallet_id, target_wallet_id, amount, state, created_at, modified_at)
+        VALUES (#{id}, #{entityId},#{sourceAccountId},#{targetAccountId},#{sourceWalletId},#{targetWalletId}, #{amount}, #{state}, #{createdAt}, #{modifiedAt})
+        ON CONFLICT (id)
+        DO
+        UPDATE SET
+            state = EXCLUDED.state,
+            modified_at = EXCLUDED.modified_at
+    </update>
 </mapper>

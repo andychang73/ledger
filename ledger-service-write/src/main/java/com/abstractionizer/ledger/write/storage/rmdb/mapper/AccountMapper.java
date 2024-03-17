@@ -15,5 +15,5 @@ public interface AccountMapper extends BaseMapper<AccountEntity> {
 
     int updateAccountStatus(Long id, AccountState state);
 
-    WalletVo selectByIdAndWalletId(Long accountId, Long walletId);
+    WalletVo selectByIdAndWalletIdForUpdate(Long accountId, Long walletId);
 }

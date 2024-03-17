@@ -1,16 +1,21 @@
 package com.abstractionizer.ledger.write.service;
 
+import com.abstractionizer.ledger.write.model.vo.SimpleWalletVo;
+import com.abstractionizer.ledger.write.model.vo.WalletVo;
 import com.abstractionizer.ledger.write.storage.rmdb.entity.WalletEntity;
-import com.abstractionizer.module.enumeration.AssetType;
 
 import java.math.BigDecimal;
 
 public interface WalletService {
     void checkIfSufficientFundOrThrow(BigDecimal balance, BigDecimal freezeBalance, BigDecimal amount);
 
-    void checkIfBothAssetTypeAreSameOrThrow(AssetType sourceAssetType, AssetType targetAssetType);
+    void checkIfBothAssetTypeAreSameOrThrow(WalletVo sourceWallet, WalletVo targetWallet);
 
-    void freezeTransferAmount(Long id, BigDecimal amount);
+    void reduceAmountFromSourceWallet(Long sourceWalletId, BigDecimal amount);
 
-    WalletEntity getWallet(Long id);
+    void addBalanceToTargetWallet(Long targetWalletId, BigDecimal amount);
+
+    WalletEntity getWalletOrThrow(Long id);
+
+    SimpleWalletVo getWalletVoOrThrow(Long id);
 }

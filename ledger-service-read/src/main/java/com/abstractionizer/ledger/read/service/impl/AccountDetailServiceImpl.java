@@ -4,11 +4,14 @@ import com.abstractionizer.ledger.read.model.dto.ModifyAccountDetailStateDto;
 import com.abstractionizer.ledger.read.model.vo.AccountAndWalletDetailVo;
 import com.abstractionizer.ledger.read.service.AccountDetailService;
 import com.abstractionizer.ledger.read.storage.rmdb.mapper.AccountDetailMapper;
+import com.abstractionizer.module.exception.BusinessException;
 import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.abstractionizer.module.error.Error.UPDATE_DATA_FAILED;
 
 @Service
 public class AccountDetailServiceImpl implements AccountDetailService {
@@ -22,7 +25,7 @@ public class AccountDetailServiceImpl implements AccountDetailService {
     @Override
     public void modifyState(@NotNull final ModifyAccountDetailStateDto dto) {
         if(accountDetailMapper.modifyState(dto.getAccountId(), dto.getAccountState()) != 1){
-            throw new RuntimeException(String.format("Failed to modify account id '%s', state '%s'", dto.getAccountId(), dto.getAccountState()));
+            throw new BusinessException(UPDATE_DATA_FAILED);
         }
     }
 

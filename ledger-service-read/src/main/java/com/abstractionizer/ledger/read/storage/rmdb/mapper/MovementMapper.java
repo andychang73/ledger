@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MovementMapper extends BaseMapper<MovementEntity> {
+    void upsert(MovementEntity entity);
 }

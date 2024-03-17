@@ -13,5 +13,5 @@ public interface AccountService {
 
     void validateAccountStateIsOpen(AccountState accountState);
 
-    WalletVo getWalletOrThrow(Long accountId, Long walletId);
+    WalletVo selectWalletForUpdateOrThrow(Long accountId, Long walletId);
 }

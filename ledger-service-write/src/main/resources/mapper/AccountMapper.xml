@@ -9,12 +9,13 @@
         WHERE id = #{id}
     </select>
 
-    <select id="selectByIdAndWalletId" resultType="com.abstractionizer.ledger.write.model.vo.WalletVo">
-        SELECT w.id, a.type AS assetType, a.code AS assetCode, a.name AS assetName, w.balance w.freeze_balance
+    <select id="selectByIdAndWalletIdForUpdate" resultType="com.abstractionizer.ledger.write.model.vo.WalletVo">
+        SELECT w.id, a.type AS assetType, a.code AS assetCode, a.name AS assetName, w.balance, w.freeze_balance
         FROM account acc
         JOIN wallet w ON w.account_id = acc.id
         JOIN asset a ON a.id = w.asset_id
-        WHERE a.id = #{accountId} AND w.id = #{wallet_id}
+        WHERE acc.id = #{accountId} AND w.id = #{walletId}
+        FOR UPDATE
     </select>
 
     <update id="updateAccountStatus">

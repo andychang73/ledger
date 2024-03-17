@@ -4,5 +4,5 @@ import com.abstractionizer.ledger.read.storage.rmdb.entity.MovementEntity;
 
 public interface MovementService {
 
-    void insert(MovementEntity entity);
+    void upsert(MovementEntity entity);
 }

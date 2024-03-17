@@ -7,4 +7,16 @@
         SET freeze_balance = freeze_balance + #{amount}
         WHERE id = #{id}
     </insert>
+
+    <insert id="addBalanceById">
+        UPDATE wallet
+        SET balance = balance + #{amount}
+        WHERE id = #{id}
+    </insert>
+
+    <update id="reduceBalanceById">
+        UPDATE wallet
+        SET balance = balance - #{amount}
+        WHERE id = #{id}
+    </update>
 </mapper>

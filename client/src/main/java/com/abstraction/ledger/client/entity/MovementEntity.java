@@ -15,7 +15,9 @@ public class MovementEntity {
 
     private Long entityId;
 
-    private Long accountId;
+    private Long sourceAccountId;
+
+    private Long targetAccountId;
 
     private Long sourceWalletId;
 

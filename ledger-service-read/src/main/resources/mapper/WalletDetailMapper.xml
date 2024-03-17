@@ -4,7 +4,7 @@
 
     <update id="updateBalanceById">
         UPDATE wallet_detail
-        SET balance = balance - #{amount}
+        SET balance = #{balance}
         WHERE id = #{id}
     </update>
 </mapper>

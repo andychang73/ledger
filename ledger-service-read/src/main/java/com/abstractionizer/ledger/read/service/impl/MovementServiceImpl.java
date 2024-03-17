@@ -3,11 +3,8 @@ package com.abstractionizer.ledger.read.service.impl;
 import com.abstractionizer.ledger.read.service.MovementService;
 import com.abstractionizer.ledger.read.storage.rmdb.entity.MovementEntity;
 import com.abstractionizer.ledger.read.storage.rmdb.mapper.MovementMapper;
-import com.abstractionizer.module.exception.BusinessException;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
-
-import static com.abstractionizer.module.error.Error.CREATE_DATA_FAIL;
 
 @Service
 public class MovementServiceImpl implements MovementService {
@@ -19,9 +16,7 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public void insert(@NonNull final MovementEntity entity) {
-        if(movementMapper.insert(entity) != 1){
-            throw new BusinessException(CREATE_DATA_FAIL);
-        }
+    public void upsert(@NonNull final MovementEntity entity) {
+        movementMapper.upsert(entity);
     }
 }

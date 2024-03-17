@@ -26,6 +26,6 @@ public class MovementListener extends BaseRabbitListener {
 
     @RabbitListener(queues = MOVEMENT_BROADCAST_QUEUE, containerFactory = "containerFactory", concurrency = "3")
     public void listenToMovementBroadcast(@Payload @Valid Message<MovementBroadCastDto> message, Channel channel){
-        processMessage(message, channel, () -> movementService.insert(message.getPayload().getMovementEntity()));
+        processMessage(message, channel, () -> movementService.upsert(message.getPayload().getMovementEntity()));
     }
 }

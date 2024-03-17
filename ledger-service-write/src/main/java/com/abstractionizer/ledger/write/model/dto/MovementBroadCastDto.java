@@ -9,4 +9,8 @@ import lombok.Data;
 public class MovementBroadCastDto {
     private MovementEntity movementEntity;
     private Object detail;
+
+    public MovementBroadCastDto(MovementEntity movementEntity){
+        this.movementEntity = movementEntity;
+    }
 }

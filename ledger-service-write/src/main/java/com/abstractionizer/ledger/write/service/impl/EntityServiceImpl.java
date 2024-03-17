@@ -3,7 +3,7 @@ package com.abstractionizer.ledger.write.service.impl;
 import com.abstractionizer.ledger.write.model.vo.AccountVo;
 import com.abstractionizer.ledger.write.service.EntityService;
 import com.abstractionizer.ledger.write.storage.rmdb.mapper.EntityMapper;
-import com.abstractionizer.module.exception.BusinessException;
+import com.abstractionizer.module.exception.DeclineException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,6 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public AccountVo getAccountOrThrow(@NotNull final Long entityId, @NotNull final Long accountId) {
         return Optional.ofNullable(entityMapper.selectByEntityIdAndAccountId(entityId, accountId))
-                .orElseThrow(() -> new BusinessException(ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new DeclineException(ACCOUNT_NOT_FOUND));
     }
 }

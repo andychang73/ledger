@@ -24,7 +24,9 @@ public class MovementEntity {
 
     private Long entityId;
 
-    private Long accountId;
+    private Long sourceAccountId;
+
+    private Long targetAccountId;
 
     private Long sourceWalletId;
 
@@ -33,6 +35,8 @@ public class MovementEntity {
     private BigDecimal amount;
 
     private MovementState state;
+
+    private String remark;
 
     private LocalDateTime createdAt;
 

@@ -1,6 +1,6 @@
 package com.abstraction.ledger.client.mq.rabbit;
 
-import com.abstraction.ledger.client.model.dto.WalletBalanceUpdateDto;
+import com.abstraction.ledger.client.model.dto.SimpleWalletVo;
 import com.abstractionizer.module.rabbitmq.BaseRabbitListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
@@ -27,7 +27,7 @@ public class WalletListener extends BaseRabbitListener {
 
     @SneakyThrows
     @RabbitListener(queues = WALLET_BALANCE_UPDATE_QUEUE, containerFactory = "containerFactory", concurrency = "3")
-    public void subscribeToWalletBalanceUpdate(@Payload @Valid Message<WalletBalanceUpdateDto> message, Channel channel){
+    public void subscribeToWalletBalanceUpdate(@Payload @Valid Message<SimpleWalletVo> message, Channel channel){
         processMessage(message, channel, () -> log.info("Wallet balance update listener: {}", objectMapper.writeValueAsString(message.getPayload())));
     }
 }

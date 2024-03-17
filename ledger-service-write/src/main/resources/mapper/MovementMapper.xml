@@ -3,8 +3,9 @@
 <mapper namespace="com.abstractionizer.ledger.write.storage.rmdb.mapper.MovementMapper">
 
     <insert id="insertEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO movement (entity_id, account_id, source_wallet_id, target_wallet_id, amount, state, created_at, modified_at)
-        VALUES (#{entityId},#{accountId},#{sourceWalletId},#{targetWalletId}, #{amount}, #{state}, #{createdAt}, #{modifiedAt})
+        INSERT INTO movement (entity_id, source_account_id, target_account_id, source_wallet_id, target_wallet_id, amount, state, created_at, modified_at)
+        VALUES (#{entityId},#{sourceAccountId},#{targetAccountId},#{sourceWalletId},#{targetWalletId}, #{amount}, #{state}, #{createdAt}, #{modifiedAt})
     </insert>
+
 
 </mapper>

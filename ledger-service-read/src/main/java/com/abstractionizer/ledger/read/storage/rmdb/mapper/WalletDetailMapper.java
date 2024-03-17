@@ -10,5 +10,5 @@ import java.math.BigDecimal;
 @Mapper
 @Repository
 public interface WalletDetailMapper extends BaseMapper<WalletDetailEntity> {
-    int updateBalanceById(Long id, BigDecimal amount);
+    int updateBalanceById(Long id, BigDecimal balance);
 }

@@ -6,6 +6,7 @@ import com.abstractionizer.ledger.write.storage.rmdb.entity.AccountEntity;
 import com.abstractionizer.ledger.write.storage.rmdb.mapper.AccountMapper;
 import com.abstractionizer.module.enumeration.AccountState;
 import com.abstractionizer.module.exception.BusinessException;
+import com.abstractionizer.module.exception.DeclineException;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +38,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void validateAccountStateIsOpen(@NonNull final AccountState accountState) {
         if(accountState != AccountState.OPEN){
-            throw new BusinessException(ILLEGAL_ACCOUNT_STATE_TO_MOVE);
+            throw new DeclineException(ILLEGAL_ACCOUNT_STATE_TO_MOVE);
         }
     }
 
     @Override
-    public WalletVo getWalletOrThrow(@NonNull final Long accountId, @NonNull final Long walletId) {
-        return Optional.ofNullable(accountMapper.selectByIdAndWalletId(accountId, walletId))
-                .orElseThrow(() -> new BusinessException(WALLET_NOT_FOUND));
+    public WalletVo selectWalletForUpdateOrThrow(@NonNull final Long accountId, @NonNull final Long walletId) {
+        return Optional.ofNullable(accountMapper.selectByIdAndWalletIdForUpdate(accountId, walletId))
+                .orElseThrow(() -> new DeclineException(WALLET_NOT_FOUND));
     }
 }
